@@ -11,11 +11,14 @@ public class Main {
         Store store = new Store();
         store.createCar(500000, "kia-rio",
                 "B146AA");
-        store.sellCar("kia-rio",
-                "Jhon",
-                "Konner" ,
-                "+79126241898");
+//        store.sellCar("kia-rio",
+//                "Jhon",
+//                "Konner" ,
+//                "+79126241898");
 
         store.save();
+        Thread.interrupted();
+        Store store1 = new Store();
+        //store1.recover();
     }
 }

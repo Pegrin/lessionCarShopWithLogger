@@ -1,12 +1,10 @@
 package CarShop;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import datamanager.DataManager;
 import models.Car;
 import models.Client;
 import models.Order;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -29,8 +27,8 @@ public class Store {
 
     public void save (){
         DataManager.serialize(cars, FILE_CARS);
-        DataManager.serialize(clients, FILE_CLIENTS);
-        DataManager.serialize(contractList, FILE_CONTRACTS);
+        //DataManager.serialize(clients, FILE_CLIENTS);
+        //DataManager.serialize(contractList, FILE_CONTRACTS);
     }
 
     public void recover (){
@@ -40,17 +38,17 @@ public class Store {
              list) {
             cars.add(car);
         }
-
-        ArrayList <Client> listClient = new ArrayList<>();
-        DataManager.deserialize(FILE_CLIENTS, listClient);
-        for (Client client:
-                listClient) {
-            clients.add(client);
-        }
-
-        ArrayList <Order> contractListOne = new ArrayList<>();
-        ArrayList <Client> contractListTwo = new ArrayList<>();
-        DataManager.deserialize(FILE_CONTRACTS,  contractList);
+return;
+//        ArrayList <Client> listClient = new ArrayList<>();
+//        DataManager.deserialize(FILE_CLIENTS, listClient);
+//        for (Client client:
+//                listClient) {
+//            clients.add(client);
+//        }
+//
+//        ArrayList <Order> contractListOne = new ArrayList<>();
+//        ArrayList <Client> contractListTwo = new ArrayList<>();
+//        DataManager.deserialize(FILE_CONTRACTS,  contractList);
     }
 
     public Order getFirstOrder(){
@@ -65,7 +63,7 @@ public class Store {
     public void sellCar(String model,
                         String firstName,
                         String lastName,
-                        String phoneNumber){
+                        String phoneNumber) throws CarNotFoundException {
         Client client = new Client(firstName,
                 lastName, phoneNumber);
         clients.add(client);
@@ -89,20 +87,30 @@ public class Store {
         }
         else{
             System.out.println("Car not found");
+            throw new CarNotFoundException();
         }
     }
 
-    public void getOrders(){
+    public List<Order> getOrders(){
+        List <Order> list = new ArrayList<>();
         for (Order order :
                 contractList.keySet()) {
-            System.out.println(order.toString());
+//            System.out.println(order.toString());
+            list.add(order);
         }
+        return list;
     }
 
-    public void getFreeCars(){
+    public ArrayList<Car> getFreeCars(){
+        ArrayList <Car> arrCars = new ArrayList<>();
         for (Car car:
                 cars){
-            System.out.println(car.getModel());
+            arrCars.add(car);
         }
+        return arrCars;
+    }
+
+    public Map<Order, Client> getContractList(){
+        return contractList;
     }
 }
